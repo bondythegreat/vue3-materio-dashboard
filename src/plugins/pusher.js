@@ -5,5 +5,5 @@ const options = {
   encrypted: true,
 }
 
-export const pusher = new Pusher('b24a038069190c25cd3b', options)
+export const pusher = new Pusher(import.meta.env.VITE_PUSHER_API_KEY, options)
 

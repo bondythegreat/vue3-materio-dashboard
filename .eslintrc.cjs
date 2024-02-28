@@ -55,7 +55,7 @@ module.exports = {
     'max-len': 'off',
 
     // we don't want it
-    'semi': ['error', 'never'],
+    //'semi': ['error', 'never'],
 
     // add parens ony when required in arrow function
     'arrow-parens': ['error', 'as-needed'],

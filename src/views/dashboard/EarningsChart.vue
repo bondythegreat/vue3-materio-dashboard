@@ -11,7 +11,7 @@ const { totalEarnings, data } = storeToRefs(store)
 const { updateEarning } = store;
 
 const series = [{
-  data: data.value
+  data: data.value,
 }]
 
 const chartOptions = computed(() => {
@@ -39,8 +39,8 @@ const chartOptions = computed(() => {
       enabled: true,
       easing: 'linear',
       dynamicAnimation: {
-        speed: 1000
-      }
+        speed: 1000,
+      },
     },
     stroke: {
       width: 2,
@@ -60,7 +60,7 @@ const chartOptions = computed(() => {
     xaxis: {
       type: "datetime",
       labels: { 
-        show: true 
+        show: true, 
       },
       axisTicks: { show: true },
       axisBorder: { show: false },
@@ -70,7 +70,7 @@ const chartOptions = computed(() => {
         show: true,
         formatter: function (value) {
           return `$ ${value}`;
-        }
+        },
       },
     },
   }
@@ -81,17 +81,18 @@ channel.bind('my-event', function(data) {
   // update data in pinia
   updateEarning(data)
 });
-
-
 </script>
 
 <template>
   <VCard>
     <VCardItem>
       <VCardTitle>Earnings</VCardTitle>
-      <small>Earnings</small>
+      <small class="text-uppercase">Earnings</small>
       <VRow>
-        <VCol cols="12" sm="9">
+        <VCol
+          cols="12"
+          sm="9"
+        >
           <VueApexCharts
             type="area"
             :options="chartOptions"
@@ -100,18 +101,28 @@ channel.bind('my-event', function(data) {
             class="my-1"
           />
         </VCol>
-        <VCol  cols="12" sm="3">
-          <div class="text-h3 text-right">${{totalEarnings}}</div>
-          <div class="text-small text-right my-3"><span class="text-success">+42%</span> since last week</div>
+        <VCol 
+          cols="12"
+          sm="3"
+        >
+          <div class="text-h3 text-right">
+            ${{ totalEarnings }}
+          </div>
+          <div class="text-small text-right my-3">
+            <span class="text-success">+42%</span> since last week
+          </div>
 
           <div class="d-flex align-end gap-3 flex-column">
-            <div class="text-center price-item">11800 ETH</div>
-            <div class="text-center price-item">16800 SNT</div>
+            <div class="text-center price-item">
+              11800 ETH
+            </div>
+            <div class="text-center price-item">
+              16800 SNT
+            </div>
           </div>
         </VCol>
       </VRow>
-      
-  </VCardItem>
+    </VCardItem>
   </VCard>
 </template>
 
