@@ -3,17 +3,18 @@ import avatar1 from '@images/avatars/avatar-1.png';
 </script>
 
 <template>
-
+  <div
+    id="profile-activator" 
+    class="d-flex align-center cursor-pointer"
+  >
     <VAvatar
-      class="cursor-pointer"
       color="primary"
       variant="tonal"
     >
       <VImg :src="avatar1" />
-
       <!-- SECTION Menu -->
       <VMenu
-        activator="parent"
+        activator="#profile-activator"
         width="230"
         location="bottom end"
         offset="14px"
@@ -64,7 +65,6 @@ import avatar1 from '@images/avatars/avatar-1.png';
           <RouterLink to="account-settings">
             <VListItem link>
               <template #prepend>
-              
                 <VIcon
                   class="me-2"
                   icon="ri-settings-4-line"
@@ -118,7 +118,12 @@ import avatar1 from '@images/avatars/avatar-1.png';
           </VListItem>
         </VList>
       </VMenu>
-      <!-- !SECTION -->
+    <!-- !SECTION -->
     </VAvatar>
- 
+    <VIcon
+      icon="ri-arrow-down-s-fill"
+      class="ml-2"
+      size="16"
+    />
+  </div>
 </template>

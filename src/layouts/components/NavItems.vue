@@ -112,7 +112,6 @@ import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
       target: '_blank'
     }"
   />
-  
 </template>
 
 <style lang="scss">

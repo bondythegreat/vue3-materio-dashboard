@@ -8,33 +8,33 @@ const props = defineProps({
 </script>
 
 <template>
-    <li
-      class="nav-link"
-      :class="{ disabled: item.disable }"
+  <li
+    class="nav-link"
+    :class="{ disabled: item.disable }"
+  >
+    <Component
+      :is="item.to ? 'RouterLink' : 'a'"
+      :to="item.to"
+      :href="item.href"
+      :target="item.target"
+      :class="!item.to && !item.href ? `cursor-default`: ``"
     >
-      <Component
-        :is="item.to ? 'RouterLink' : 'a'"
-        :to="item.to"
-        :href="item.href"
-        :target="item.target"
-        :class="!item.to && !item.href ? `cursor-default`: ``"
+      <VIcon
+        :icon="item.icon || 'ri-checkbox-blank-circle-line'"
+        class="nav-item-icon"
+      />
+      <!-- 👉 Title -->
+      <span class="nav-item-title">
+        {{ item.title }}
+      </span>
+      <span
+        class="nav-item-badge"
+        :class="item.badgeClass"
       >
-        <VIcon
-          :icon="item.icon || 'ri-checkbox-blank-circle-line'"
-          class="nav-item-icon"
-        />
-        <!-- 👉 Title -->
-        <span class="nav-item-title">
-          {{ item.title }}
-        </span>
-        <span
-          class="nav-item-badge"
-          :class="item.badgeClass"
-        >
-          {{ item.badgeContent }}
-        </span>
-      </Component>
-    </li>
+        {{ item.badgeContent }}
+      </span>
+    </Component>
+  </li>
 </template>
 
 <style lang="scss">

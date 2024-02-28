@@ -20,72 +20,47 @@ onMounted(() => {
     zoom: initialState.zoom,
   }))
 
-  var origins = [
+  var locations = [
     [106.886684, -6.203189], //jkt
     [112.625297, -7.337780], //sby
     [100.455900, -0.888183], //pdg
-
-  ]
-
-  var destinations = [
     [110.371832, -7.777483], //jog
     [119.897568, -8.604954], //lbj
     [116.831393, -1.234536], //bpp
+
   ]
 
-  // A simple line from origin to destination.
-  var routes = [];
-
-  // setup all datas
-  for (var i =0; i<origins.length;i++) {
-    routes[i] = {
-      'type': 'FeatureCollection',
-      'features': [
-        {
-          'type': 'Feature',
-          'geometry': {
-            'type': 'LineString',
-
-            // 'coordinates': [origins[0], destinations[0]],
-            coordinates: 
-            [
-              origins[i], destinations[i],
-            ],
-          },
-        },
-  
+  // draw arc function
+  function drawArc(id, origin, destination) {
+    let route = {
+      type: 'LineString',
+      coordinates: [
+        origin,
+        destination,
       ],
     };
-  }
+    const lineD = turf.lineDistance(route, { units: 'kilometers' });
 
-  // Calculate the distance in kilometers between route start/end point.
-  var lineDistance = turf.lineDistance(routes[0].features[0], 'kilometers');
-  var arc = []; // array or arc point
-  var steps = 200;
-
-  // draw arc function
-  function drawArc(id, route) {
-    const lineD = turf.lineDistance(route.features[0], { units: 'kilometers' });
-
-    const mp = turf.midpoint(route.features[0].geometry.coordinates[0], route.features[0].geometry.coordinates[1]);
+    const mp = turf.midpoint(destination, origin);
 
     const center = turf.destination(
       mp,
       lineD,
-      turf.bearing(route.features[0].geometry.coordinates[0], route.features[0].geometry.coordinates[1]) - 100,
+      turf.bearing(destination, origin) - 90,
     );
 
     const lA = turf.lineArc(
       center,
-      turf.distance(center, route.features[0].geometry.coordinates[0]),
-      turf.bearing(center, route.features[0].geometry.coordinates[1]),
-      turf.bearing(center, route.features[0].geometry.coordinates[0]),
+      turf.distance(center, destination),
+      turf.bearing(center, origin),
+      turf.bearing(center, destination),
     );
 
-
-    const newRouteData = route;
-
-    newRouteData.features[0] = lA;
+    var newRouteData = {
+      'type': 'FeatureCollection',
+      'features': [],
+    };
+    newRouteData.features.push(lA);
 
     state.map?.addLayer(
       {
@@ -108,17 +83,38 @@ onMounted(() => {
     );
   }
   
+  // animate line function
   var speedFactor = 15; // number of frames per longitude degree
   var animation; // to store and cancel the animation
   var startTime = 0;
   var progress = 0; // progress = timestamp - startTime
   var resetTime = false; // indicator of whether time reset is needed for the animation
-  // var pauseButton = document.getElementById('pause');
 
+  function animateLine(timestamp) {
+    // restart if it finishes a loop
+    if (progress > speedFactor * 360) {
+      startTime = timestamp;
+
+      // routes[0].features[0].geometry.coordinates = origins[0];
+    } else {
+      // append new coordinates to the lineString
+      geojson.features[0].geometry.coordinates.push([x, y]);
+
+      // then update the map
+      state.map?.getSource('line').setData(routes[0]);
+    }
+
+    // Request the next frame of the animation.
+    animation = requestAnimationFrame(animateLine);
+  }
+  
   state.map.on('load', function () {
-    drawArc('arc0', routes[0]);
-    drawArc('arc1', routes[1]);
-    drawArc('arc2', routes[2]);
+    drawArc('arc0', locations[0], locations[3]);
+    drawArc('arc1', locations[1], locations[4]);
+    drawArc('arc2', locations[2], locations[5]);
+    drawArc('arc3', locations[0], locations[4]);
+    drawArc('arc4', locations[0], locations[5]);
+
 
     /*
     state.map.addSource('line', {
@@ -151,45 +147,6 @@ onMounted(() => {
     document.addEventListener('visibilitychange', function () {
       resetTime = true;
     });
-    
-    var steps = arc.length;
-    var counter = 0;
-    function animateLine() {
-      // then update the map
-      routes[0].features[0].geometry.coordinates.push(arc[counter]);
-      state.map?.getSource('line').setData(routes[0]);
-      animation = requestAnimationFrame(animateLine);
-      
-      if (counter < steps) {
-        requestAnimationFrame(animateLine);
-      } else {
-        // loop
-        counter = 0;
-      }
-      counter++;
-      
-    }
-
-    // animated in a circle as a sine wave along the state.map.
-    /*
-    function animateLine2(timestamp) {
-      // restart if it finishes a loop
-      if (progress > speedFactor * 360) {
-        startTime = timestamp;
-
-        // routes[0].features[0].geometry.coordinates = origins[0];
-      } else {
-        // append new coordinates to the lineString
-        geojson.features[0].geometry.coordinates.push([x, y]);
-
-        // then update the map
-        state.map?.getSource('line').setData(routes[0]);
-      }
-
-      // Request the next frame of the animation.
-      animation = requestAnimationFrame(animateLine);
-    }
-    */
   })
 })
 
