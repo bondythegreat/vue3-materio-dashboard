@@ -3,7 +3,8 @@
 import { useAttackMapStore } from '@/stores/attacksMap';
 import { Map, MapStyle, config } from '@maptiler/sdk';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
-import * as turf from '@turf/turf';
+
+import { drawArc } from '@/@core/utils/mapUtils';
 import { markRaw, onMounted, onUnmounted, shallowRef } from 'vue';
 
 const store = useAttackMapStore()
@@ -24,61 +25,6 @@ onMounted(() => {
     center: [initialState.lng, initialState.lat],
     zoom: initialState.zoom,
   }))
-
-
-
-  // draw arc function
-  function drawArc(id, origin, destination) {
-    let route = {
-      type: 'LineString',
-      coordinates: [
-        origin,
-        destination,
-      ],
-    };
-    const lineD = turf.lineDistance(route, { units: 'kilometers' });
-
-    const mp = turf.midpoint(destination, origin);
-
-    const center = turf.destination(
-      mp,
-      lineD,
-      turf.bearing(destination, origin) - 90,
-    );
-
-    const lA = turf.lineArc(
-      center,
-      turf.distance(center, destination),
-      turf.bearing(center, origin),
-      turf.bearing(center, destination),
-    );
-
-    var newRouteData = {
-      'type': 'FeatureCollection',
-      'features': [],
-    };
-    newRouteData.features.push(lA);
-
-    state.map?.addLayer(
-      {
-        id,
-        type: 'line',
-        source: {
-          type: 'geojson',
-          data: newRouteData,
-        },
-        layout: {
-          'line-cap': 'round',
-          'line-join': 'round',
-        },
-        paint: {
-          'line-color': '#8c57ff',
-          'line-width': 2,
-          'line-opacity': 0.8,
-        },
-      },
-    );
-  }
   
   // animate line function
   var speedFactor = 15; // number of frames per longitude degree
@@ -106,11 +52,11 @@ onMounted(() => {
   }
   
   state.map.on('load', function () {
-    drawArc('arc0', locations.value[0].lngLat, locations.value[3].lngLat);
-    drawArc('arc1', locations.value[1].lngLat, locations.value[4].lngLat);
-    drawArc('arc2', locations.value[2].lngLat, locations.value[5].lngLat);
-    drawArc('arc3', locations.value[0].lngLat, locations.value[4].lngLat);
-    drawArc('arc4', locations.value[0].lngLat, locations.value[5].lngLat);
+    drawArc('arc0', locations.value[0].lngLat, locations.value[3].lngLat, state.map);
+    drawArc('arc1', locations.value[1].lngLat, locations.value[4].lngLat, state.map);
+    drawArc('arc2', locations.value[2].lngLat, locations.value[5].lngLat, state.map);
+    drawArc('arc3', locations.value[0].lngLat, locations.value[4].lngLat, state.map);
+    drawArc('arc4', locations.value[0].lngLat, locations.value[5].lngLat, state.map);
 
 
     /*

@@ -63,8 +63,6 @@ export const useAttackMapStore = defineStore('attackMap', () => {
 
   const getFinalAttackList = () => {
     return attackList.value.map(item => {
-      console.log(item)
-      
       return {
         from: locationsData[item.from],
         to: locationsData[item.to],

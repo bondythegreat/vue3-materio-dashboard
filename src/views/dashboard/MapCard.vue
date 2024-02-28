@@ -4,9 +4,7 @@ import { useAttackMapStore } from '@/stores/attacksMap';
 
 const store = useAttackMapStore()
 const { getFinalAttackList } = store;
-const attackList = getFinalAttackList();
-
-console.log(attackList)
+const attackList = ref(computed(() => getFinalAttackList()));
 </script>
 
 <template>
