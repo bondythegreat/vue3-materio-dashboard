@@ -10,6 +10,9 @@ import { markRaw, onMounted, onUnmounted, shallowRef } from 'vue';
 const store = useAttackMapStore()
 
 const { locations } = storeToRefs(store)
+const { getFinalAttackList } = store;
+
+const attackList = ref(computed(()=>getFinalAttackList()))
 
 const mapContainer = shallowRef(null)
 const state = reactive({ map: null })
@@ -52,11 +55,11 @@ onMounted(() => {
   }
   
   state.map.on('load', function () {
-    drawArc('arc0', locations.value[0].lngLat, locations.value[3].lngLat, state.map);
-    drawArc('arc1', locations.value[1].lngLat, locations.value[4].lngLat, state.map);
-    drawArc('arc2', locations.value[2].lngLat, locations.value[5].lngLat, state.map);
-    drawArc('arc3', locations.value[0].lngLat, locations.value[4].lngLat, state.map);
-    drawArc('arc4', locations.value[0].lngLat, locations.value[5].lngLat, state.map);
+    // get all the attackList from getAttackList() and map to drawArc
+    attackList.value.map((attackItem, idx) => {
+      drawArc(`arc${idx}`, attackItem.from.lngLat, attackItem.to.lngLat, state.map);
+    })
+    
 
 
     /*
