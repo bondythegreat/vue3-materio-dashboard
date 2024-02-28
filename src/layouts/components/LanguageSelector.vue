@@ -31,7 +31,7 @@ const changeLang = selected => {
     <span>{{ langOptions[langSelectedIdx].label }}</span>
     <VIcon
       icon="ri-arrow-down-s-fill"
-      class="ml-2"
+      class="ml-1"
       size="16"
     />
     <!-- SECTION Menu -->

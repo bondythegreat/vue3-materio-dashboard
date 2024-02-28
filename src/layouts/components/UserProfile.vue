@@ -122,7 +122,7 @@ import avatar1 from '@images/avatars/avatar-1.png';
     </VAvatar>
     <VIcon
       icon="ri-arrow-down-s-fill"
-      class="ml-2"
+      class="ml-1"
       size="16"
     />
   </div>

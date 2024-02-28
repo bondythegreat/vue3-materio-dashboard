@@ -1,9 +1,9 @@
 <script setup>
-import BalanceCard from '@/views/dashboard/BalanceCard.vue'
-import EarningsChart from '@/views/dashboard/EarningsChart.vue'
-import MapCard from '@/views/dashboard/MapCard.vue'
-import WeatherCard from '@/views/dashboard/WeatherCard.vue'
-import WithdrawCard from '@/views/dashboard/WithdrawCard.vue'
+import BalanceCard from '@/views/dashboard/BalanceCard.vue';
+import EarningsChart from '@/views/dashboard/EarningsChart.vue';
+import MapCard from '@/views/dashboard/MapCard.vue';
+import WeatherCard from '@/views/dashboard/WeatherCard.vue';
+import WithdrawCard from '@/views/dashboard/WithdrawCard.vue';
 </script>
 
 <template>

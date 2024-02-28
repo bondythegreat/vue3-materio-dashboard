@@ -76,7 +76,8 @@ const chartOptions = computed(() => {
   }
 })
 
-var channel = pusher.subscribe('my-channel');
+const channel = pusher.subscribe('my-channel');
+
 channel.bind('my-event', function(data) {
   // update data in pinia
   updateEarning(data)

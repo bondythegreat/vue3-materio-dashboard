@@ -1,9 +1,14 @@
 
 <script setup>
+import { useAttackMapStore } from '@/stores/attacksMap';
 import { Map, MapStyle, config } from '@maptiler/sdk';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
 import * as turf from '@turf/turf';
 import { markRaw, onMounted, onUnmounted, shallowRef } from 'vue';
+
+const store = useAttackMapStore()
+
+const { locations } = storeToRefs(store)
 
 const mapContainer = shallowRef(null)
 const state = reactive({ map: null })
@@ -11,7 +16,7 @@ const state = reactive({ map: null })
 onMounted(() => {
   config.apiKey = import.meta.env.VITE_MAPTILES_KEY
 
-  const initialState = { lng: 118.130873, lat: -3.144973, zoom: 4 }
+  const initialState = { lng: 109.829034, lat: -1.367668, zoom: 4 }
 
   state.map = markRaw(new Map({
     container: mapContainer.value,
@@ -20,15 +25,7 @@ onMounted(() => {
     zoom: initialState.zoom,
   }))
 
-  var locations = [
-    [106.886684, -6.203189], //jkt
-    [112.625297, -7.337780], //sby
-    [100.455900, -0.888183], //pdg
-    [110.371832, -7.777483], //jog
-    [119.897568, -8.604954], //lbj
-    [116.831393, -1.234536], //bpp
 
-  ]
 
   // draw arc function
   function drawArc(id, origin, destination) {
@@ -109,11 +106,11 @@ onMounted(() => {
   }
   
   state.map.on('load', function () {
-    drawArc('arc0', locations[0], locations[3]);
-    drawArc('arc1', locations[1], locations[4]);
-    drawArc('arc2', locations[2], locations[5]);
-    drawArc('arc3', locations[0], locations[4]);
-    drawArc('arc4', locations[0], locations[5]);
+    drawArc('arc0', locations.value[0].lngLat, locations.value[3].lngLat);
+    drawArc('arc1', locations.value[1].lngLat, locations.value[4].lngLat);
+    drawArc('arc2', locations.value[2].lngLat, locations.value[5].lngLat);
+    drawArc('arc3', locations.value[0].lngLat, locations.value[4].lngLat);
+    drawArc('arc4', locations.value[0].lngLat, locations.value[5].lngLat);
 
 
     /*
