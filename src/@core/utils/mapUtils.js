@@ -128,7 +128,7 @@ export const animateLine = (id, origin, destination, mapObj) => {
 
   const steps = coordinates.length;
   let i = 0;
-  let now = performance.now();
+  let now;
   let then = performance.now();
   let elapsed;
 

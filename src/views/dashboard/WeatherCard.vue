@@ -28,41 +28,53 @@ const weatherItems = [
     <VCardText>
       <div class="d-flex align-end mb-7">
         <div class="d-flex gap-3 align-end pb-1">
-          <VIcon icon="ri-shining-fill"
-size="14" />
-          <VIcon icon="ri-sun-line"
-size="14" />
-          <VIcon icon="ri-cloud-line"
-size="14" />
-          <VIcon icon="ri-moon-fill"
-size="14" />
+          <VIcon
+            icon="ri-shining-fill"
+            size="14"
+          />
+          <VIcon
+            icon="ri-sun-line"
+            size="14"
+          />
+          <VIcon
+            icon="ri-cloud-line"
+            size="14"
+          />
+          <VIcon
+            icon="ri-moon-fill"
+            size="14"
+          />
         </div>
         <div class="flex-fill text-right align-end">
           <h4 class="text-h3 hotness">
-{{ weather }} <span class="text-h6">&deg;C</span>
-</h4>
+            {{ weather }} <span class="text-h6">&deg;C</span>
+          </h4>
         </div>
       </div>
       <div class="mb-8">
         <div class="d-flex justify-space-between my-3 degrees">
           <div v-for="degree in degreesProgres">
-{{ degree }}&deg;C
-</div>
+            {{ degree }}&deg;C
+          </div>
         </div>
         <VProgressLinear
           v-model="barValue"
           height="4"
-        ></VProgressLinear>
+        />
       </div>
 
       <small class="d-block mb-3">DETAILS</small>
       <VRow class="match-height">
-        <VCol cols="12"
-sm="4" xs="6" v-for="item in weatherItems" class="pa-1">
+        <VCol
+          cols="12"
+          v-for="item in weatherItems"
+sm="4"
+xs="6" class="pa-1"
+        >
           <WeatherItemCard :item="item" />
         </VCol>
       </VRow>
-</VCardText>
+    </VCardText>
   </VCard>
 </template>
 

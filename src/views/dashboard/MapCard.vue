@@ -15,8 +15,18 @@ const attackList = ref(computed(() => getFinalAttackList()));
         class="d-flex flex-column"
       >
         <VCardItem class="title VCard title-bg">
-          <VCardTitle>Attack Map</VCardTitle>
-          <small class="text-uppercase">Indonesia</small>
+          <div class="d-flex align-center">
+            <div class="flex-fill">
+              <VCardTitle>Attack Map</VCardTitle>
+              <small class="text-uppercase">Indonesia</small>
+            </div>
+            <div>
+              <VIcon
+                icon="ri-bug-fill"
+                size="36"
+              />
+            </div>
+          </div>
         </VCardItem>
         <VCardItem class="list-container flex-fill align-start">
           <div
