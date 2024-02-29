@@ -56,8 +56,6 @@ export const drawArc = (id, origin, destination, mapObj) => {
 let then = performance.now();
 
 export const animateLine = (id, origin, destination, mapObj) => {
-  console.log(id)
-
   // calculate and create the coordinates array
   let route = {
     type: 'LineString',
@@ -105,7 +103,7 @@ export const animateLine = (id, origin, destination, mapObj) => {
     'type': 'geojson',
     'data': newRouteData,
   });
-  console.log(mapObj)
+  
   mapObj.addLayer({
     'id': `line-animation-${id}`,
     'type': 'line',
