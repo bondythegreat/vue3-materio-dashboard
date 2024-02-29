@@ -71,7 +71,7 @@ export const animateLine = (id, origin, destination, mapObj) => {
   const center = turf.destination(
     mp,
     lineD,
-    turf.bearing(destination, origin) - 90,
+    turf.bearing(destination, origin) - 89,
   );
 
   const lA = turf.lineArc(
@@ -79,6 +79,8 @@ export const animateLine = (id, origin, destination, mapObj) => {
     turf.distance(center, destination),
     turf.bearing(center, origin),
     turf.bearing(center, destination),
+
+    { steps: Math.ceil(lineD / 8) },
   );
   
   const coordinates = lA.geometry.coordinates;
@@ -121,10 +123,11 @@ export const animateLine = (id, origin, destination, mapObj) => {
 
 
   // PREPARE ANIMATION
+  const steps = coordinates.length;
+
   const fps = 10;
   const fpsInterval = 1000 / fps;
 
-  const steps = coordinates.length;
   let i = 0;
   let now;
   let then = performance.now();
