@@ -53,7 +53,7 @@ const chartOptions = computed(() => {
       offsetY: 4,
       offsetX: -2,
       strokeWidth: 1,
-      colors: ['transparent'],
+      colors: ['#ffffff'],
       strokeColors: 'transparent',
       hover: { size: 7 },
     },
@@ -61,6 +61,11 @@ const chartOptions = computed(() => {
       type: "datetime",
       labels: { 
         show: true, 
+        rotate: -45,
+        style: {
+          colors: "#e7e3fcb3",
+          cssClass: "axis-label",
+        },
       },
       axisTicks: { show: true },
       axisBorder: { show: false },
@@ -68,6 +73,9 @@ const chartOptions = computed(() => {
     yaxis: { 
       labels: { 
         show: true,
+        style: {
+          colors: ["#e7e3fcb3"],
+        },
         formatter: function (value) {
           return `$ ${value}`;
         },
