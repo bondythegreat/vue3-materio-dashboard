@@ -34,7 +34,7 @@ const login = () => {
     if (searchParams.has("redirect")) {
       router.push({ path: `${searchParams.get("redirect")}` });
     } else {
-        router.push({path: 'dashboard'})
+      router.push({ path: 'dashboard' })
     }
   }
 }
@@ -54,7 +54,6 @@ const login = () => {
             <div v-html="logo" />
           </div>
         </template>
-
       </VCardItem>
 
       <VCardText class="pt-2">
