@@ -138,10 +138,8 @@ export const animateLine = (id, origin, destination, mapObj) => {
     
     elapsed = now - then;
     
-    console.log(id, now, then, elapsed);
     if (elapsed > fpsInterval) {
       then = now - (elapsed % fpsInterval);
-      console.log('trieeger')
 
       // codes
       if (i >= steps) {
